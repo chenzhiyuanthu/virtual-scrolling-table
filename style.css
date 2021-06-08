@@ -1,0 +1,42 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  padding: auto;
+  text-align: center;
+  font-family: Roboto;
+}
+
+h1 {
+  padding-top: 1rem;
+  font-weight: 100;
+}
+
+#table-container {
+  border: 0.5px solid rgba(0, 0, 0, 0.4);
+  display: inline-block;
+  font-weight: 200;
+  height: 600px;
+  margin-top: 1rem;
+  position: relative;
+  width: 600px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 120, 0.5);
+}
