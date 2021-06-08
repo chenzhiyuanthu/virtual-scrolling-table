@@ -29,10 +29,14 @@ class VirtualScrollingTable {
   }
 
   createHeader() {
+    console.log(this.columns);
     const header = document.createElement('div');
     header.className = 'vst-header';
     header.style.height = this.headerHeight + 'px';
     header.style.boxShadow = '0px 3px 6px #00000024';
+    header.style.display = 'flex';
+  
+        
     return header;
   }
 
