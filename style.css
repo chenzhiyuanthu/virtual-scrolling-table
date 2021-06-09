@@ -16,11 +16,11 @@ h1 {
 }
 
 #table-container {
-  border: 0.5px solid rgba(0, 0, 0, 0.4);
   display: inline-block;
   font-weight: 200;
   height: 600px;
   margin-top: 1rem;
+  padding: 30px;
   position: relative;
   width: 600px;
 }
@@ -28,7 +28,6 @@ h1 {
 .header-cell:not(:last-child) {
   border-right: 1px dotted;
 }
-
 
 ::-webkit-scrollbar {
   width: 8px;
