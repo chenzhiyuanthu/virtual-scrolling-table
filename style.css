@@ -16,11 +16,11 @@ h1 {
 }
 
 #table-container {
-  border: 0.5px solid rgba(0, 0, 0, 0.4);
   display: inline-block;
   font-weight: 200;
   height: 600px;
   margin-top: 1rem;
+  padding: 30px;
   position: relative;
   width: 600px;
 }
@@ -29,19 +29,18 @@ h1 {
   border-right: 1px dotted;
 }
 
-
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #eeeeee;
+  background-color: #3b3b3b;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: #818181;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(0, 0, 120, 0.5);
+  background-color: #4b78FA;
 }
