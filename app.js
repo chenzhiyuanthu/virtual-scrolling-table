@@ -45,7 +45,6 @@ class VirtualScrollingTable {
         this.columns.forEach((c, index, arr) => {
           const bodyCell = document.createElement('div');
           bodyCell.style.paddingRight = '12px';
-          // bodyCell.style.width = 1 / this.columns.length * 100 + '%';
           bodyCell.style.width = this.columnWidths[c.key] * 100 + '%';
           index != arr.length - 1 &&
               (bodyCell.style.borderRight =
@@ -107,7 +106,11 @@ class VirtualScrollingTable {
     tableBody.style.height = `calc(100% - ${this.headerHeight}px)`;
     tableBody.style.fontSize = '14px';
     tableBody.style.position = 'relative';
+
+    // The scroll bar should be overlay, so that it will not reduce the width of
+    // table body.
     tableBody.style.overflowY = 'overlay';
+
     return tableBody;
   }
 
@@ -117,6 +120,7 @@ class VirtualScrollingTable {
     header.style.height = this.headerHeight + 'px';
     header.style.lineHeight = this.headerHeight + 'px';
     header.style.borderTop = '2px solid #636363';
+    header.style.fontSize = '13px';
     header.style.display = 'flex';
     this._enrichColumn();
     this.columns.forEach((c, index, arr) => {
@@ -214,7 +218,7 @@ class VirtualScrollingTable {
 }
 
 const items = [];
-const totalRows = 1000000;
+const totalRows = 100000;
 
 for (let i = 0; i < totalRows; i++) {
   const q = Formatter.format;
@@ -231,9 +235,9 @@ const list = new VirtualScrollingTable({
   headerHeight: 50,
   containerId: 'table-container',
   columns: [
-    {name: 'Type', key: 'a', style: {textAlign: 'right', fontWeight: 'normal'}},
-    {name: 'Car No.', key: 'b', style: {textAlign: 'right'}},
-    {name: 'Destination', key: 'c', style: {textAlign: 'right'}}
+    {name: '类型', key: 'a', style: {textAlign: 'right', fontWeight: 'normal'}},
+    {name: '车牌号', key: 'b', style: {textAlign: 'right'}},
+    {name: '拜访单位', key: 'c', style: {textAlign: 'right'}}
   ]
 });
 
