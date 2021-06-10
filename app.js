@@ -18,10 +18,11 @@ class VirtualScrollingTable {
     this.containerId = config.containerId;
     this.headerHeight = config.headerHeight;
     this.height = (config && config.h + 'px') || '100%';
-    this.data = config.items;
-    this.updateData(this.data);
-    this.itemHeight = config.itemHeight;
     this.columns = config.columns;
+    this.data = config.items;
+    this.columnWidths = this.updateData(this.data);
+    console.log(this.columnWidths);
+    this.itemHeight = config.itemHeight;
     this.generatorFn = (rowNumber) => {
       const item = this.data[rowNumber];
       const row = document.createElement('div');
@@ -44,7 +45,8 @@ class VirtualScrollingTable {
         this.columns.forEach((c, index, arr) => {
           const bodyCell = document.createElement('div');
           bodyCell.style.paddingRight = '12px';
-          bodyCell.style.width = 1 / this.columns.length * 100 + '%';
+          // bodyCell.style.width = 1 / this.columns.length * 100 + '%';
+          bodyCell.style.width = this.columnWidths[c.key] * 100 + '%';
           index != arr.length - 1 &&
               (bodyCell.style.borderRight =
                    `1px solid ${this.#DEFAULT_THEME.borderColor2}`);
@@ -117,16 +119,16 @@ class VirtualScrollingTable {
     header.style.borderTop = '2px solid #636363';
     header.style.display = 'flex';
     this._enrichColumn();
-    this.columns.forEach((_c, index, arr) => {
+    this.columns.forEach((c, index, arr) => {
       const headerCell = document.createElement('div');
       const headerName = document.createElement('span');
-      headerName.innerHTML = _c.name;
+      headerName.innerHTML = c.name;
       headerCell.appendChild(headerName);
       headerCell.className = 'header-cell';
       (index != arr.length - 1) &&
           (headerCell.style.borderRight =
                `1px solid ${this.#DEFAULT_THEME.borderColor2}`);
-      headerCell.style.width = 1 / this.columns.length * 100 + '%';
+      headerCell.style.width = (this.columnWidths[c.key] * 100) + '%';
       header.appendChild(headerCell);
     });
     return header;
@@ -149,7 +151,6 @@ class VirtualScrollingTable {
         c['key'] = c['name'];
       }
     });
-    console.log(this.columns);
   }
 
   _renderChunk(node, fromPos, howMany) {
@@ -175,16 +176,45 @@ class VirtualScrollingTable {
 
   updateData(data) {
     this.data = data;
-    this.#calculateWidth();
+    return this._calculateColumnWidth();
   }
 
-  #calculateWidth() {
-    console.log(this.data);
+  /**
+   * Adjust column width fitting the content length.
+   */
+  _calculateColumnWidth() {
+    const res = {};
+    if (this.data) {
+      let total = 0;
+
+      this.data.forEach(d => {
+        this.columns.forEach(c => {
+          const l = d[c.key].toString().length;
+
+          if (res[c.key] == null) {
+            res[c.key] = 0;
+          }
+
+          if (l > res[c.key]) {
+            total -= res[c.key];
+            res[c.key] = l;
+            total += l;
+          };
+        });
+      });
+
+      Object.keys(res).forEach(k => {
+        const v = res[k];
+        res[k] = v / total;
+      });
+    }
+
+    return res;
   }
 }
 
 const items = [];
-const totalRows = 10;
+const totalRows = 1000000;
 
 for (let i = 0; i < totalRows; i++) {
   const q = Formatter.format;
